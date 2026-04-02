@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABCF Bible Memory Match Game</title>
+    <!-- Vercel Speed Insights -->
+    <script>
+        window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+    </script>
+    <script defer src="https://va.vercel-scripts.com/v1/speed-insights/script.js" data-sdkn="@vercel/speed-insights" data-sdkv="2.0.0"></script>
+    <style>
+        /* ----------------- GLOBAL STYLES ----------------- */
+        :root {
+            --primary-dark: #121212;
+            --primary-light: #f8f9fa;
+            --accent-purple: #6C63FF;
+            --accent-green: #38EF7D;
+            --accent-blue: #4A90E2;
+            --glow-radius: 15px;
+            --transition-speed: 0.4s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #121212 100%);
+            color: var(--primary-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem;
+            position: relative; /* For positioning exit button */
+        }
+
+        /* ----------------- BUTTON EFFECTS ----------------- */
+        .btn {
+            position: relative;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 50px;
+            background: var(--primary-dark);
+            color: var(--primary-light);
+            font-weight: 600;
+            cursor: pointer;
+            overflow: hidden;
+            z-index: 1;
+            transition: transform var(--transition-speed);
+        }
+
+        .btn::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(var(--accent-purple), var(--accent-green), var(--accent-blue), var(--accent-purple));
+            animation: rotate 4s linear infinite;
+            z-index: -1;
+        }
+
+        .btn::after {
+            content: "";
+            position: absolute;
+            inset: 2px;
+            background: var(--primary-dark);
+            border-radius: 48px;
+            z-index: -1;
+        }
+
+        .btn:hover {
+            transform: scale(1.03);
+        }
+
+        /* Exit Button Specific Styles */
+        .exit-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem; /* Bottom right position */
+            background: var(--primary-dark);
+            border: 2px solid #ff4757;
+        }
+
+        .exit-btn::before {
+            background: conic-gradient(#ff4757, #ff6b81, #ff4757, #ff6b81);
+        }
+
+        .exit-btn:hover {
+            box-shadow: 0 0 var(--glow-radius) rgba(255, 71, 87, 0.3);
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ----------------- GAME STYLES ----------------- */
+        h1 {
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-green));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            margin-bottom: 1rem;
+        }
+
+        .game-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(5px);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-item span {
+            font-weight: bold;
+            margin-left: 0.5rem;
+        }
+
+        .level-stat span { color: var(--accent-green); }
+        .clicks-stat span { color: var(--accent-purple); }
+        .time-stat span { color: var(--accent-blue); }
+        .high-score-stat span { color: var(--accent-purple); }
+
+        .game-board {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            width: 100px;
+            height: 120px;
+            border: 2px solid var(--accent-purple);
+            border-radius: 12px;
+            cursor: pointer;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+            background: var(--primary-dark);
+        }
+
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem;
+            text-align: center;
+        }
+
+        .card-front {
+            background: var(--accent-purple);
+        }
+
+        .card-front img {
+            width: 60px;
+            height: auto;
+            max-width: 100%;
+            max-height: 80%;
+            object-fit: contain;
+        }
+
+        .card-back {
+            background: var(--primary-dark);
+            transform: rotateY(180deg);
+            justify-content: space-around;
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .card-verse {
+            font-size: 0.8rem;
+            line-height: 1.2;
+        }
+
+        .win-message {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--primary-dark);
+            border: 2px solid var(--accent-green);
+            border-radius: 16px;
+            padding: 2.5rem;
+            text-align: center;
+            min-width: 320px;
+            box-shadow: 0 0 30px rgba(56,239,125,0.2);
+        }
+
+        .win-message.active {
+            display: block;
+        }
+
+        .win-message h2 {
+            color: var(--accent-green);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .next-level-text {
+            color: var(--accent-blue);
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+
+        /* ----------------- RESPONSIVE ----------------- */
+        @media (max-width: 600px) {
+            .card {
+                width: 80px;
+                height: 100px;
+            }
+            .game-stats {
+                padding: 1rem;
+                gap: 1rem;
+            }
+            .exit-btn {
+                bottom: 1.5rem;
+                right: 1.5rem;
+                padding: 0.7rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>ABCF Bible Memory Match Game</h1>
+
+    <div class="game-stats">
+        <div class="stat-item level-stat">Level: <span id="currentLevel">Easy</span></div>
+        <div class="stat-item clicks-stat">Clicks: <span id="totalClicks">0</span></div>
+        <div class="stat-item time-stat">Time: <span id="elapsedTime">00:00</span></div>
+        <div class="stat-item high-score-stat">Best: <span id="highScore">No Score Yet</span></div>
+    </div>
+
+    <div class="game-board" id="gameBoard"></div>
+
+    <div class="win-message" id="winMessage">
+        <h2 id="messageHeader">Great Job!</h2>
+        <p>Level: <span id="finalLevel">Easy</span></p>
+        <p>Clicks: <span id="finalClicks">0</span></p>
+        <p>Time: <span id="finalTime">00:00</span></p>
+        <p class="next-level-text" id="nextLevelText"></p>
+        <button class="btn" onclick="proceed()">Continue</button>
+    </div>
+
+    <!-- Exit Button - Bottom Right Position -->
+    <button class="btn exit-btn" onclick="exitGame()">Exit Game</button>
+
+    <script>
+        const LEVELS = [
+            { name: "Easy", pairs: 4, cols: 4, cards: [
+                { icon: "✝️", verse: "John 3:16" },
+                { icon: "📖", verse: "Psalm 23:1" },
+                { icon: "🙏", verse: "Philippians 4:6" },
+                { icon: "🕊️", verse: "Genesis 8:11" }
+            ]},
+            { name: "Medium", pairs: 6, cols: 4, cards: [
+                { icon: "✝️", verse: "John 3:16" },
+                { icon: "📖", verse: "Psalm 23:1" },
+                { icon: "🙏", verse: "Philippians 4:6" },
+                { icon: "🕊️", verse: "Genesis 8:11" },
+                { icon: "❤️", verse: "1 Corinthians 13:4" },
+                { icon: "🔥", verse: "Acts 2:38" }
+            ]},
+            { name: "Hard", pairs: 8, cols: 5, cards: [
+                { icon: "✝️", verse: "John 3:16" },
+                { icon: "📖", verse: "Psalm 23:1" },
+                { icon: "🙏", verse: "Philippians 4:6" },
+                { icon: "🕊️", verse: "Genesis 8:11" },
+                { icon: "❤️", verse: "1 Corinthians 13:4" },
+                { icon: "🔥", verse: "Acts 2:38" },
+                { icon: "🌟", verse: "Matthew 5:16" },
+                { icon: "⛪", verse: "Hebrews 10:25" }
+            ]}
+        ];
+
+        // Game State
+        let currentLevelIndex = 0;
+        let currentLevel = LEVELS[currentLevelIndex];
+        let cardData = [];
+        let flippedCards = [];
+        let totalClicks = 0;
+        let matchedPairs = 0;
+        let timerInterval;
+        let elapsedTime = 0;
+        let timerStarted = false;
+        let highScores = JSON.parse(localStorage.getItem('abcfGameScores')) || {};
+
+        // Elements
+        const gameBoard = document.getElementById('gameBoard');
+        const currentLevelEl = document.getElementById('currentLevel');
+        const totalClicksEl = document.getElementById('totalClicks');
+        const elapsedTimeEl = document.getElementById('elapsedTime');
+        const highScoreEl = document.getElementById('highScore');
+        const winMessage = document.getElementById('winMessage');
+        const messageHeader = document.getElementById('messageHeader');
+        const finalLevelEl = document.getElementById('finalLevel');
+        const finalClicksEl = document.getElementById('finalClicks');
+        const finalTimeEl = document.getElementById('finalTime');
+        const nextLevelText = document.getElementById('nextLevelText');
+
+        // Init Game
+        function initGame() {
+            currentLevel = LEVELS[currentLevelIndex];
+            currentLevelEl.textContent = currentLevel.name;
+            finalLevelEl.textContent = currentLevel.name;
+            totalClicks = 0;
+            matchedPairs = 0;
+            elapsedTime = 0;
+            timerStarted = false;
+            flippedCards = [];
+            
+            totalClicksEl.textContent = '0';
+            elapsedTimeEl.textContent = '00:00';
+            winMessage.classList.remove('active');
+
+            // Shuffle Cards
+            cardData = [...currentLevel.cards, ...currentLevel.cards].sort(() => Math.random() - 0.5);
+
+            // Render Cards
+            gameBoard.innerHTML = '';
+            const colSize = window.innerWidth <= 600 ? '80px' : '100px';
+            gameBoard.style.gridTemplateColumns = `repeat(${currentLevel.cols}, ${colSize})`;
+
+            cardData.forEach((card, idx) => {
+                const cardEl = document.createElement('div');
+                cardEl.classList.add('card');
+                cardEl.dataset.index = idx;
+                cardEl.innerHTML = `
+                    <div class="card-front"><img src="ABCFLOGO.png" alt="ABCF Logo"></div>
+                    <div class="card-back">
+                        <div class="card-icon">${card.icon}</div>
+                        <div class="card-verse">${card.verse}</div>
+                    </div>
+                `;
+                cardEl.addEventListener('click', handleCardClick);
+                gameBoard.appendChild(cardEl);
+            });
+
+            // Load High Score
+            highScoreEl.textContent = highScores[currentLevel.name] ? 
+                `${highScores[currentLevel.name].time} | ${highScores[currentLevel.name].clicks} clicks` : 
+                'No Score Yet';
+
+            clearInterval(timerInterval);
+        }
+
+        // Card Click Handler
+        function handleCardClick(e) {
+            const card = e.currentTarget;
+            if (card.classList.contains('flipped') || flippedCards.length >= 2) return;
+
+            if (!timerStarted) {
+                timerStarted = true;
+                timerInterval = setInterval(() => {
+                    elapsedTime++;
+                    elapsedTimeEl.textContent = formatTime(elapsedTime);
+                }, 1000);
+            }
+
+            card.classList.add('flipped');
+            flippedCards.push(card);
+            totalClicks++;
+            totalClicksEl.textContent = totalClicks;
+
+            if (flippedCards.length === 2) checkMatch();
+        }
+
+        // Check Match
+        function checkMatch() {
+            const [card1, card2] = flippedCards;
+            const idx1 = card1.dataset.index;
+            const idx2 = card2.dataset.index;
+
+            if (cardData[idx1].icon === cardData[idx2].icon) {
+                matchedPairs++;
+                flippedCards = [];
+                if (matchedPairs === currentLevel.pairs) completeLevel();
+            } else {
+                setTimeout(() => {
+                    card1.classList.remove('flipped');
+                    card2.classList.remove('flipped');
+                    flippedCards = [];
+                }, 1000);
+            }
+        }
+
+        // Complete Level
+        function completeLevel() {
+            clearInterval(timerInterval);
+            const time = formatTime(elapsedTime);
+
+            if (!highScores[currentLevel.name] || 
+                totalClicks < highScores[currentLevel.name].clicks || 
+                (totalClicks === highScores[currentLevel.name].clicks && elapsedTime < highScores[currentLevel.name].elapsed)) {
+                highScores[currentLevel.name] = { clicks: totalClicks, time: time, elapsed: elapsedTime };
+                localStorage.setItem('abcfGameScores', JSON.stringify(highScores));
+                highScoreEl.textContent = `${time} | ${totalClicks} clicks`;
+            }
+
+            finalClicksEl.textContent = totalClicks;
+            finalTimeEl.textContent = time;
+            
+            if (currentLevelIndex < LEVELS.length - 1) {
+                messageHeader.textContent = `${currentLevel.name} Complete!`;
+                nextLevelText.textContent = `Next: ${LEVELS[currentLevelIndex + 1].name}`;
+            } else {
+                messageHeader.textContent = "All Levels Complete!";
+                nextLevelText.textContent = "Play Again from Start?";
+            }
+
+            winMessage.classList.add('active');
+        }
+
+        // Proceed Function
+        function proceed() {
+            currentLevelIndex = currentLevelIndex < LEVELS.length - 1 ? currentLevelIndex + 1 : 0;
+            initGame();
+        }
+
+        // Exit Game Function
+        function exitGame() {
+                        if (confirm("Are you sure you want to exit the game?")) {
+               window.close();
+               // Fallback for mobile browsers
+               if (!window.closed) {
+                  alert("Game exit initiated - you can close this tab now.");
+                  window.location.href = "HOME.HTML";
+               }
+            }
+            }
+            
+            // Format Time
+            function formatTime(seconds) {
+               const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
+               const secs = (seconds % 60).toString().padStart(2, '0');
+               return `${mins}:${secs}`;
+            }
+            
+            // Start Game
+            initGame();
+            </script>
+            </body> 
+            </html>
