@@ -1,0 +1,27 @@
+{
+  "name": "abcf-official",
+  "version": "1.0.0",
+  "description": "Alabang Bible Christian Fellowship Official Website",
+  "scripts": {
+    "dev": "npx serve .",
+    "test": "echo \"No tests specified\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mwark-Aewon/ABCF-OFFICIAL.git"
+  },
+  "keywords": [
+    "church",
+    "abcf",
+    "website"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mwark-Aewon/ABCF-OFFICIAL/issues"
+  },
+  "homepage": "https://github.com/Mwark-Aewon/ABCF-OFFICIAL#readme",
+  "dependencies": {
+    "@vercel/speed-insights": "^2.0.0"
+  }
+}

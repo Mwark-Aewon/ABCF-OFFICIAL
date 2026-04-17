@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABCF | About Us</title>
+    <!-- Vercel Speed Insights -->
+    <script>
+        window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+    </script>
+    <script defer src="https://va.vercel-scripts.com/v1/speed-insights/script.js" data-sdkn="@vercel/speed-insights" data-sdkv="2.0.0"></script>
+    <style>
+        :root {
+            --primary-dark: #050505;
+            --secondary-dark: #101010;
+            --primary-light: #f8f9fa;
+            --accent-purple: #6C63FF;
+            --accent-blue: #4A90E2;
+            --accent-green: #38EF7D;
+            --accent-gold: #FFD700;
+            --glow-radius: 15px;
+            --transition-speed: 0.4s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #121212 100%);
+            color: var(--primary-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 0;
+        }
+
+        /* NAVIGATION - EXACT MATCH TO MAIN SITE */
+        nav {
+            background: rgba(18,18,18,0.9);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .abcf-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-text span {
+            color: var(--accent-green);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-btn {
+            padding: 0.7rem 1.5rem;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 50px;
+            background: transparent;
+            color: var(--primary-light);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+        }
+
+        .nav-btn:last-child {
+            padding: 0.7rem 1rem;
+            font-size: 1.2rem;
+        }
+
+        .nav-btn:hover {
+            border-color: var(--accent-green);
+            box-shadow: 0 0 var(--glow-radius) rgba(56,239,125,0.3);
+        }
+
+        /* HERO SECTION - MATCHES MAIN SITE STYLE */
+        .hero {
+            padding: 6rem 0;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-green));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 2rem;
+        }
+
+        .hero-text p {
+            font-size: clamp(1rem, 1.5vw, 1.1rem);
+            opacity: 0.8;
+            max-width: 500px;
+            margin-bottom: 2.5rem;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 50px;
+            background: var(--primary-dark);
+            color: var(--primary-light);
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .btn::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(var(--accent-purple), var(--accent-green), var(--accent-purple));
+            animation: rotate 4s linear infinite;
+            z-index: 0;
+        }
+
+        .btn::after {
+            content: "";
+            position: absolute;
+            inset: 2px;
+            background: var(--primary-dark);
+            border-radius: 48px;
+            z-index: 1;
+        }
+
+        .btn span {
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hero-photo-container {
+            border-radius: 24px;
+            overflow: hidden;
+            height: 400px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%,100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .hero-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* EXTRAORDINARY INTERWOVEN CHAIN & ORB SECTION - MATCHES UI THEME */
+        #about-details {
+            background: rgba(0,0,0,0.2);
+            padding: 6rem 0;
+        }
+
+        .details-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .details-header h2 {
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            margin-bottom: 1rem;
+        }
+
+        .details-header p {
+            opacity: 0.8;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Chain & Orb Layout */
+        .chain-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+
+        /* Central Chain */
+        .central-chain {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent-purple), var(--accent-green), var(--accent-blue));
+            border-radius: 2px;
+            box-shadow: 0 0 var(--glow-radius) rgba(108,99,255,0.2);
+        }
+
+        /* Chain Links */
+        .chain-link {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--accent-color);
+            border-radius: 50%;
+            background: var(--secondary-dark);
+            top: var(--link-top);
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 10px rgba(var(--link-glow), 0.3);
+        }
+
+        .link-1 { --accent-color: var(--accent-purple); --link-glow: 108,99,255; --link-top: 15%; }
+        .link-2 { --accent-color: var(--accent-green); --link-glow: 56,239,125; --link-top: 35%; }
+        .link-3 { --accent-color: var(--accent-blue); --link-glow: 74,144,226; --link-top: 55%; }
+        .link-4 { --accent-color: var(--accent-gold); --link-glow: 255,215,0; --link-top: 75%; }
+
+        /* Info Orbs */
+        .info-orbs {
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+            padding: 4rem 0;
+        }
+
+        .info-orb {
+            position: relative;
+            width: 100%;
+            max-width: 380px;
+            min-height: 250px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all var(--transition-speed);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+        }
+
+        .info-orb:nth-child(odd) { margin-left: 2rem; }
+        .info-orb:nth-child(even) { margin-right: 2rem; }
+
+        .info-orb:hover {
+            transform: translateY(-8px);
+            border-color: var(--orb-accent);
+            box-shadow: 0 0 var(--glow-radius) rgba(var(--orb-glow), 0.3);
+        }
+
+        .orb-1 { --orb-accent: var(--accent-purple); --orb-glow: 108,99,255; }
+        .orb-2 { --orb-accent: var(--accent-green); --orb-glow: 56,239,125; }
+        .orb-3 { --orb-accent: var(--accent-blue); --orb-glow: 74,144,226; }
+        .orb-4 { --orb-accent: var(--accent-gold); --orb-glow: 255,215,0; }
+
+        .info-orb h3 {
+            color: var(--orb-accent);
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+        }
+
+        .info-orb p {
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        /* MINISTRY PILLARS SECTION - MATCHES MAIN SITE FEATURE CARD STYLE */
+        #ministry-pillars {
+            padding: 6rem 0;
+        }
+
+        .pillars-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .pillars-header h2 {
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            color: var(--accent-green);
+            margin-bottom: 1rem;
+        }
+
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .pillar-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 2.5rem;
+            transition: all var(--transition-speed);
+        }
+
+        .pillar-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+        }
+
+        .pillar-card h3 {
+            color: var(--accent-purple);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .pillar-card:nth-child(2) h3 { color: var(--accent-green); }
+        .pillar-card:nth-child(3) h3 { color: var(--accent-blue); }
+        .pillar-card:nth-child(4) h3 { color: var(--accent-gold); }
+
+        .pillar-card p {
+            opacity: 0.9;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        /* FOOTER - EXACT MATCH TO MAIN SITE */
+        footer {
+            background: var(--primary-dark);
+            padding: 3rem 0;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: auto;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 2rem;
+        }
+
+        .social-media h3 {
+            color: var(--accent-green);
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .social-logo-container {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid rgba(255,255,255,0.2);
+            cursor: pointer;
+            transition: all var(--transition-speed);
+        }
+
+        .social-logo-container:hover {
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 var(--glow-radius) rgba(108,99,255,0.3);
+            transform: scale(1.1);
+        }
+
+        .social-logo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .copyright {
+            opacity: 0.7;
+            margin-top: 1rem;
+        }
+
+        /* RESPONSIVE - EXACT MATCH TO MAIN SITE */
+        @media (max-width: 992px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .nav-links .nav-btn:not(:last-child) {
+                display: none;
+            }
+
+            .info-orbs {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+            }
+
+            .info-orb:nth-child(odd), .info-orb:nth-child(even) {
+                margin: 0 auto;
+            }
+
+            .central-chain, .chain-link {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo-container" onclick="window.open('index.html', '_blank')">
+                    <img src="ABCFLOGO.png" alt="ABCF Logo" class="abcf-logo">
+                    <span class="logo-text"><span>ABCF</span> Official</span>
+                </div>
+                <div class="nav-links">
+                    <button class="nav-btn" onclick="window.open('HOME.HTML', '_blank')">HOME</button>
+                    <button class="nav-btn" onclick="window.open('ABOUT.HTML', '_blank')">ABOUT</button>
+                    <button class="nav-btn" onclick="window.open('MINISTRIES.HTML', '_blank')">MINISTRIES</button>
+                    <button class="nav-btn" onclick="window.open('ANN.HTML', '_blank')">ANNOUNCEMENTS</button>
+                    <!-- NEW: Game Button with Icon -->
+                    <button class="nav-btn" onclick="window.open('GAME.HTML', '_blank')">
+                       <span>🎮</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Alabang Bible<br>Christian Fellowship</h1>
+                    <p>Building Up in Christ, Reaching Out in Love.</p>
+                    <button class="btn" onclick="scrollToSection('about-details')"><span>Explore Our Story</span></button>
+                </div>
+                <div class="hero-photo-container">
+                    <img src="CHURCH.jpeg" alt="ABCF Community" class="hero-photo">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about-details">
+        <div class="container">
+            <div class="details-header">
+                <h2>Our Foundation & Journey</h2>
+                <p>Rooted in biblical truth and woven together by faith, we’ve grown from a small home gathering to a thriving community serving Metro Manila.</p>
+            </div>
+
+            <div class="chain-container">
+                <div class="central-chain"></div>
+                <div class="chain-link link-1"></div>
+                <div class="chain-link link-2"></div>
+                <div class="chain-link link-3"></div>
+                <div class="chain-link link-4"></div>
+
+                <div class="info-orbs">
+                    <div class="info-orb orb-1">
+                        <h3>Our Roots</h3>
+                        <p>Founded in 1985 with just 12 families meeting in a living room, we’ve stayed true to our call to worship God and serve others – growing through His grace each step of the way.</p>
+                    </div>
+                    <div class="info-orb orb-2">
+                        <h3>Our Mission</h3>
+                        <p>To glorify God by making disciples of Jesus Christ, equipping believers for ministry, and sharing His love through acts of service in our community and beyond.</p>
+                    </div>
+                    <div class="info-orb orb-3">
+                        <h3>Our Vision</h3>
+                        <p>To be a vibrant, Christ-centered fellowship that transforms lives, strengthens families, and shines as a beacon of hope for the Philippines and the world.</p>
+                    </div>
+                    <div class="info-orb orb-4">
+                        <h3>Our Leadership</h3>
+                        <p>Guided by Pastor Mario Talatala and Pastor Ivan Galarpe and a team of dedicated elders, our leadership is grounded in Scripture and committed to shepherding our flock with care and wisdom.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="ministry-pillars">
+        <div class="container">
+            <div class="pillars-header">
+                <h2>Our Ministry Pillars</h2>
+                <p>These core focus areas guide how we live out our faith and serve God’s people.</p>
+            </div>
+
+            <div class="pillars-grid">
+                <div class="pillar-card">
+                    <h3>Evangelism</h3>
+                    <p>We share the good news of Jesus through community outreach, street missions, digital media, and personal relationships – making the gospel accessible to all.</p>
+                </div>
+                <div class="pillar-card">
+                    <h3>Discipleship</h3>
+                    <p>We nurture spiritual growth through small groups, Bible studies, mentorship programs, and training workshops that build mature followers of Christ.</p>
+                </div>
+                <div class="pillar-card">
+                    <h3>Family & Marriage</h3>
+                    <p>We strengthen homes with counseling, retreats, parenting classes, and family-focused events that honor God’s design for relationships.</p>
+                </div>
+                <div class="pillar-card">
+                    <h3>Youth & Children</h3>
+                    <p>We equip the next generation through Sunday School, youth camps, leadership training, and creative programs that help young people discover their purpose.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="social-media">
+                    <h3>Connect With Us</h3>
+                    <div class="social-links">
+                        <div class="social-logo-container" onclick="window.open('https://www.facebook.com/abcf.cbap.soma', '_blank')">
+                            <img src="FB.jpeg" alt="Facebook" class="social-logo">
+                        </div>
+                        <div class="social-logo-container" onclick="window.open('https://youtube.com/@alabangbiblechristianfello4205', '_blank')">
+                            <img src="YOUTUBE.jpeg" alt="YouTube" class="social-logo">
+                        </div>
+                    </div>
+                </div>
+                <div class="copyright">
+                    © 2026 Alabang Bible Christian Fellowship. All Rights Reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function scrollToSection(id) {
+            const section = document.getElementById(id);
+            if (section) {
+                window.scrollTo({
+                    top: section.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            }
+        }
+    </script>
+</body>
+</html>GAME.HTML', '_blank')">🎮</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Alabang Bible<br>Christian Fellowship</h1>
+                    <p>Building Up in Christ, Reaching Out in Love.</p>
+                    <button class="btn" onclick="scrollToSection('about-details')"><span>Explore Our Story</span></button>
+                </div>
+                <div class="hero-photo-container">
+                    <img src="CHURCH.jpeg" alt="ABCF Community" class="hero-photo">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about-details">
+        <div class="container">
+            <div class="details-header">
+                <h2>Our Foundation & Journey</h2>
+                <p>Rooted in biblical truth and woven together by faith, we’ve grown from a small home gathering to a thriving community serving Metro Manila.</p>
+            </div>
+
+            <div class="chain-container">
+                <div class="central-chain"></div>
+                <div class="chain-link link-1"></div>
+                <div class="chain-link link-2"></div>
+                <div class="chain-link link-3"></div>
+                <div class="chain-link link-4"></div>
+
+                <div class="info-orbs">
+                    <div class="info-orb orb-1">
+                        <h3>Our Roots</h3>
+                        <p>Founded in 1985 with just 12 families meeting in a living room, we’ve stayed true to our call to worship God and serve others – growing through His grace each step of the way.</p>
+                    </div>
+                    <div class="info-orb orb-2">
+                        <h3>Our Mission</h3>
+                        <p>To glorify God by making disciples of Jesus Christ, equipping believers for ministry, and sharing His love through acts of service in our community and beyond.</p>
+                    </div>
+                    <div class="info-orb orb-3">
+                        <h3>Our Vision</h3>
+                        <p>To be a vibrant, Christ-centered fellowship that transforms lives, strengthens families, and shines as a beacon of hope for the Philippines and the world.</p>
+                    </div>
+                    <div class="info-orb orb-4">
+                        <h3>Our Leadership</h3>
+                        <p>Guided by Pastor Robert dela Cruz and a team of dedicated elders, our leadership is grounded in Scripture and committed to shepherding our flock with care and wisdom.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="ministry-pillars">
+        <div class="container">
+            <div class="pillars-header">
+                <h2>Our Ministry Pillars</h2>
+                <p>These core focus areas guide how we live out our faith and serve God’s people.</p>
+            </div>
+
+            <div class="pillars-grid">
+                <div class="pillar-card">
+                    <h3>Evangelism</h3>
+                    <p>We share the good news of Jesus through community outreach, street missions, digital media, and personal relationships – making the gospel accessible to all.</p>
+                </div>
+                <div class="pillar-card">
+                    <h3>Discipleship</h3>
+                    <p>We nurture spiritual growth through small groups, Bible studies, mentorship programs, and training workshops that build mature followers of Christ.</p>
+                </div>
+                <div class="pillar-card">
+                    <h3>Family & Marriage</h3>
+                    <p>We strengthen homes with counseling, retreats, parenting classes, and family-focused events that honor God’s design for relationships.</p>
+                </div>
+                <div class="pillar-card">
+                    <h3>Youth & Children</h3>
+                    <p>We equip the next generation through Sunday School, youth camps, leadership training, and creative programs that help young people discover their purpose.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="social-media">
+                    <h3>Connect With Us</h3>
+                    <div class="social-links">
+                        <div class="social-logo-container" onclick="window.open('https://www.facebook.com/abcf.cbap.soma', '_blank')">
+                            <img src="FB.jpeg" alt="Facebook" class="social-logo">
+                        </div>
+                        <div class="social-logo-container" onclick="window.open('https://youtube.com/@alabangbiblechristianfello4205', '_blank')">
+                            <img src="YOUTUBE.jpeg" alt="YouTube" class="social-logo">
+                        </div>
+                    </div>
+                </div>
+                <div class="copyright">
+                    © 2026 Alabang Bible Christian Fellowship. All Rights Reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function scrollToSection(id) {
+            const section = document.getElementById(id);
+            if (section) {
+                window.scrollTo({
+                    top: section.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            }
+        }
+    </script>
+</body>
+</html>
